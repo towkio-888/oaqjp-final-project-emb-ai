@@ -30,7 +30,7 @@ def emotion_detector(text_to_analyze):
         anger_score = emotions.get('anger', 0)
         disgust_score = emotions.get('disgust', 0)
         fear_score = emotions.get('fear', 0)
-        joy_score = emotions.get('joy', 0.9699522)
+        joy_score = emotions.get('joy', 0)
         sadness_score = emotions.get('sadness', 0)
         
         # Create a dictionary of the required emotions and their scores
