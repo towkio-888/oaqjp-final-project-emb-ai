@@ -3,6 +3,18 @@ import requests
 import json
 
 def emotion_detector(text_to_analyze):
+    # Handle blank input
+    if not text_to_analyze.strip():
+        # Return a dictionary with all values as None for blank input
+        return {
+            'anger': None,
+            'disgust': None,
+            'fear': None,
+            'joy': None,
+            'sadness': None,
+            'dominant_emotion': None
+        }
+    
     # Define the URL and headers for the Watson Emotion API
     url = 'https://sn-watson-emotion.labs.skills.network/v1/watson.runtime.nlp.v1/NlpService/EmotionPredict'
     headers = {
@@ -49,8 +61,20 @@ def emotion_detector(text_to_analyze):
         emotion_scores['dominant_emotion'] = dominant_emotion
         
         # Return the output in the required format
-        return json.dumps(emotion_scores, indent=2)
+        return emotion_scores
+
+    elif response.status_code == 400:
+        # Handle errors for bad requests by returning a dictionary with all values as None
+        return {
+            'anger': None,
+            'disgust': None,
+            'fear': None,
+            'joy': None,
+            'sadness': None,
+            'dominant_emotion': None
+        }
+
     else:
-        # Handle errors and return the error message
+        # Handle other errors and return the error message
         error_message = f"API request failed with status code {response.status_code}: {response.text}"
-        return error_message
+        return {"error": error_message}
